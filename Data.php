@@ -44,7 +44,7 @@ class Data extends Model
 			$db->limit($pagenum,$exnum);
 		}
 
-		$data =$db->get()->getResultArray();
+		$data =$db->get()?$db->getResultArray():false;
 		return $data;
 	}
 
@@ -55,16 +55,16 @@ class Data extends Model
 		if($field){
 			switch ($field[0]) {
 				case 'selectSum':
-					$db->select_sum($field[1]);
+					$db->selectSum($field[1]);
 					break;
 				case 'selectAvg':
-					$db->select_avg($field[1]);
+					$db->selectAvg($field[1]);
 					break;
 				case 'selectMin':
-					$db->select_min($field[1]);
+					$db->selectMin($field[1]);
 					break;
 				case 'selectMax':
-					$db->select_max($field[1]);
+					$db->selectMax($field[1]);
 					break;
 				default:
 					break;
@@ -74,6 +74,15 @@ class Data extends Model
 	
 		$data = $this->db->get()->getRowArray();
 		return $data;
+	}
+
+	public function getDataNum($getwhere='',$table=''){
+		$table = $table==''?$this->table:$table;
+		$db = $this->db->table($table);
+		if($getwhere){
+			$db->where($getwhere);
+		}
+		return $db->countAllResults($table);
 	}
 
 
