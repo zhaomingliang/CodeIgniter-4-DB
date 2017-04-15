@@ -48,7 +48,7 @@ class Data extends Model
 		return $data;
 	}
 
-	public  function getFieldData($table='',$getwhere="",$field=array()){
+	public  function getFieldData($getwhere="",$field=array(),$table=''){
 		$table = $table==''?$this->table:$table;
 		$db = $this->db->table($table);
 
